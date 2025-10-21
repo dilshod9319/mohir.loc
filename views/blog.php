@@ -68,7 +68,7 @@ require_once "widgets/header.php";
                                             <li><a><?= $post['seen_count'] ?></a></li>
                                         </ul>
                                         <p><?= $post['description'] ?></p>
-                                        <div class="post-options">
+                                        <!-- <div class="post-options">
                                             <div class="row">
                                                 <div class="col-lg-12">
                                                     <ul class="post-tags">
@@ -78,7 +78,7 @@ require_once "widgets/header.php";
                                                     </ul>
                                                 </div>
                                             </div>
-                                        </div>
+                                        </div> -->
                                     </div>
                                 </div>
                             </div>
