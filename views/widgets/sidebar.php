@@ -16,7 +16,7 @@
                     <div class="content">
                         <ul>
                             <?php foreach ($news as $post) { ?>
-                               <li><a href="#">
+                               <li><a href="?controller=news_view&id=<?=$post['id']?>">
                                     <h5><?=$post['title']?></h5>
                                     <span><?= date("M d, Y", strtotime($post['created_at'])) ?></span>
                                 </a></li>
@@ -35,7 +35,7 @@
                     <div class="content">
                         <ul>
                             <?php foreach ($category as $item) { ?>
-                                <li><a href="#">- <?=$item['name']?></a></li>
+                                <li><a href="?controller=news_blog&id=<?=$item['id']?>">- <?=$item['name']?></a></li>
                             <?php } ?>
                         </ul>
                     </div>

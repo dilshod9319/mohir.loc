@@ -9,7 +9,7 @@
   <meta name="author" content="TemplateMo">
   <link href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-  <title>Stand CSS Blog by TemplateMo</title>
+  <title>News</title>
 
   <!-- Bootstrap core CSS -->
   <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -44,8 +44,8 @@ https://templatemo.com/tm-551-stand-blog
   <header class="">
     <nav class="navbar navbar-expand-lg">
       <div class="container">
-        <a class="navbar-brand" href="index.html">
-          <h2>Stand Blog<em>.</em></h2>
+        <a class="navbar-brand" href="/">
+          <h2>News Blog<em>.</em></h2>
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
@@ -54,7 +54,7 @@ https://templatemo.com/tm-551-stand-blog
           <ul class="navbar-nav ml-auto">
             <?php foreach ($menus as $menu) { ?>
               <li class="nav-item">
-                <a class="nav-link" href="<?=$menu['url']?>"><?=$menu['name']?>
+                <a class="nav-link" href="<?= $menu['url'] ?>"><?= $menu['name'] ?>
                   <span class="sr-only">(current)</span>
                 </a>
               </li>

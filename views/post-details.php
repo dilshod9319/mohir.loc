@@ -53,19 +53,19 @@ $image = getImage('news', $newsItem['id'], $newsItem['image']);
                         <div class="col-lg-12">
                             <div class="blog-post">
                                 <div class="blog-thumb">
-                                    <img src="<?=$image?>" alt="">
+                                    <img src="<?= $image ?>" alt="">
                                 </div>
                                 <div class="down-content">
-                                    <span><?=$newsItem['category_name']?></span>
+                                    <span><?= $newsItem['category_name'] ?></span>
                                     <a href="#">
-                                        <h4><?=$newsItem['title']?></h4>
+                                        <h4><?= $newsItem['title'] ?></h4>
                                     </a>
                                     <ul class="post-info">
                                         <!-- <li><a href="#">Admin</a></li> -->
-                                        <li><a href="#"><?=date('d.m.Y | H:i', strtotime($newsItem['created_at']))?></a></li>
-                                       <li><a></a><i class="fas fa-eye"></i><?=$newsItem['seen_count']?></li>
+                                        <li><a href="#"><?= date('d.m.Y | H:i', strtotime($newsItem['created_at'])) ?></a></li>
+                                        <li><a></a><i class="fas fa-eye"></i><?= $newsItem['seen_count'] ?></li>
                                     </ul>
-                                    <p><?=$newsItem['body']?></p>
+                                    <p><?= $newsItem['body'] ?></p>
                                     <div class="post-options">
                                         <div class="row">
                                             <div class="col-6">
