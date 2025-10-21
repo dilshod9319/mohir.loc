@@ -37,8 +37,6 @@
                             <?php foreach ($category as $item) { ?>
                                 <li><a href="#">- <?=$item['name']?></a></li>
                             <?php } ?>
-                            
-                            
                         </ul>
                     </div>
                 </div>
