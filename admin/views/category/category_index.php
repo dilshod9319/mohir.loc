@@ -16,19 +16,19 @@ require_once __DIR__ .  "/../widgets/sidebar.php";
             <!--begin::Row-->
             <div class="row">
                 <div class="col-sm-6">
-                    <h3 class="mb-0">Menular</h3>
+                    <h3 class="mb-0">Kategoriyalar</h3>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-end">
                         <li class="breadcrumb-item"><a href="/admin">Asosiy</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">Menular</li>
+                        <li class="breadcrumb-item active" aria-current="page">Kategoriyalar</li>
                     </ol>
                 </div>
                 <div class="col-sm-12 d-flex justify-content-end">
-                    <a href="?acontroller=menu_create" class="btn btn-success">Qo'shish</a>
+                    <a href="?acontroller=category_create" class="btn btn-success">Qo'shish</a>
                 </div>
                 <?php if (isset($_SESSION['success']) && !empty($_SESSION['success'])) { ?>
-                    <div class="col-sm-12 mt-2 success-alert-menu">
+                    <div class="col-sm-12 mt-2 success-alert-category">
                         <div class="alert alert-success"><?= $_SESSION['success'] ?></div>
                     </div>
                 <?php
@@ -46,7 +46,7 @@ require_once __DIR__ .  "/../widgets/sidebar.php";
         <div class="container-fluid">
             <div class="card mb-4">
                 <div class="card-header">
-                    <h3 class="card-title">Menyular</h3>
+                    <h3 class="card-title">Kategoriyalar</h3>
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body">
@@ -56,28 +56,24 @@ require_once __DIR__ .  "/../widgets/sidebar.php";
                                 <th style="width: 10px" scope="col">#</th>
                                 <th>ID</th>
                                 <th>Nomi</th>
-                                <th>Pozitsiyasi</th>
-                                <th>Url</th>
                                 <th>Status</th>
                                 <th>Amallar</th>
                             </tr>
                         </thead>
                         <tbody>
                             <?php $i = 1;
-                            if (!empty($menus)) {
-                                foreach ($menus as $menu) { ?>
+                            if (!empty($categories)) {
+                                foreach ($categories as $category) { ?>
                                     <tr class="align-middle">
                                         <td><?= $i++ ?></td>
-                                        <td><?= $menu['id'] ?></td>
-                                        <td><?= $menu['name'] ?></td>
-                                        <td><?= $menu['position'] ?></td>
-                                        <td><?= $menu['url'] ?></td>
-                                        <td><?= $menu['status'] ?></td>
+                                        <td><?= $category['id'] ?></td>
+                                        <td><?= $category['name'] ?></td>
+                                        <td><?= $category['status'] ?></td>
                                         <td>
-                                            <a href="?acontroller=menu_update&id=<?= $menu['id'] ?>" class="btn btn-primary">
+                                            <a href="?acontroller=category_update&id=<?= $category['id'] ?>" class="btn btn-primary">
                                                 <i class="fas fa-pencil"></i>
                                             </a>
-                                            <a href="?acontroller=menu_delete&id=<?= $menu['id'] ?>" class="btn btn-danger delete-menu" data-type="menu" data-id="<?= $menu['id'] ?>">
+                                            <a href="?acontroller=category_delete&id=<?= $category['id'] ?>" class="btn btn-danger delete-category" data-type="category" data-id-category="<?= $category['id'] ?>">
                                                 <i class="fas fa-trash"></i>
                                             </a>
                                         </td>

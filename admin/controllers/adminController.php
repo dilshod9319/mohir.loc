@@ -60,6 +60,58 @@ if(isset($_GET['acontroller']) && !empty($_GET['acontroller'])){
                     }
                 }
             break;
+            case 'category_index':
+                $categories = getCategory();
+                 require_once __DIR__ .  "/../views/category/category_index.php";
+                break;
+                case "category_create":
+                if(!empty($_POST)){
+                    $name = $_POST['name'];
+                    $status = $_POST['status'];
+                    if(!empty($name) && !empty($status) ){
+                        if(categoryCreate($name, $status)){
+                            $_SESSION['success'] = "Kategoriya muvaffaqiyatli qo'shildi";
+                            header("Location:?acontroller=category_index"); exit();
+                        }
+                    }else{
+                        $_SESSION['error'] = "Barcha maydonlarni to'ldiring" ;
+                    }
+                }
+                require_once __DIR__ .  "/../views/category/category_form.php";
+            break;
+            case "category_update":
+                if(!isset($_GET['id']) || empty($_GET['id'])){
+                    require_once __DIR__ .  "/../views/404.php";
+                }
+                $id = $_GET['id'];
+                $categoryItem = getCategoryById($id);
+                if(!$categoryItem){
+                    require_once __DIR__ .  "/../views/404.php";
+                }
+                if(!empty($_POST)){
+                    $name = $_POST['name'];
+                    $status = $_POST['status'];
+                    if(!empty($name) && !empty($status) ){
+                        if(categoryUpdate($id, $name, $status)){
+                            $_SESSION['success'] = "Kategoriya muvaffaqiyatli tahrirlandi";
+                            header("Location:?acontroller=category_index"); exit();
+                        }
+                    }else{
+                        $_SESSION['error'] = "Barcha maydonlarni to'ldiring" ;
+                    }
+                }
+
+            require_once __DIR__ .  "/../views/category/category_form.php";
+            break;
+            case "category_delete":
+                if(isset($_GET['id']) && !empty($_GET['id'])){
+                    $id = $_GET['id'];
+                    if(deleteCategory($id)){
+                        $_SESSION['success'] = "Kategoriya muvaffaqiyatli o'chirildi";
+                       header("Location:?acontroller=category_index"); exit(); 
+                    }
+                }
+            break;
     }
 }else{
     require_once "views/index.php";
