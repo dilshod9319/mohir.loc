@@ -28,7 +28,7 @@ require_once __DIR__ .  "/../widgets/sidebar.php";
                     <a href="?acontroller=category_create" class="btn btn-success">Qo'shish</a>
                 </div>
                 <?php if (isset($_SESSION['success']) && !empty($_SESSION['success'])) { ?>
-                    <div class="col-sm-12 mt-2 success-alert-category">
+                    <div class="col-sm-12 mt-2 success_alert">
                         <div class="alert alert-success"><?= $_SESSION['success'] ?></div>
                     </div>
                 <?php
@@ -73,7 +73,8 @@ require_once __DIR__ .  "/../widgets/sidebar.php";
                                             <a href="?acontroller=category_update&id=<?= $category['id'] ?>" class="btn btn-primary">
                                                 <i class="fas fa-pencil"></i>
                                             </a>
-                                            <a href="?acontroller=category_delete&id=<?= $category['id'] ?>" class="btn btn-danger delete-category" data-type="category" data-id-category="<?= $category['id'] ?>">
+                                            <a data-action="category_delete" href="?acontroller=category_delete&id=<?= $category['id'] ?>" class="btn btn-danger delete_btn" data-id
+                                            ="<?= $category['id'] ?>">
                                                 <i class="fas fa-trash"></i>
                                             </a>
                                         </td>

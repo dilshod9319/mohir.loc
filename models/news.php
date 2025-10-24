@@ -1,5 +1,31 @@
 <?php
 
+function getAllNews()
+{
+    global $pdo;
+
+    $sql = "
+    SELECT
+        n.id,
+        c.name as category_name,
+        n.category_id as category_id,
+        n.title,
+        n.seen_count,
+        n.created_at,
+        n.description,
+        n.image,
+        n.body,
+        n.status
+    FROM news n
+    LEFT JOIN category c ON n.category_id = c.id
+    ORDER BY n.created_at DESC 
+";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute();
+
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+
 function getLastNews()
 {
     global $pdo;
@@ -17,8 +43,6 @@ function getLastNews()
         n.body
     FROM news n
     LEFT JOIN category c ON n.category_id = c.id
-    WHERE n.status = " . STATUS_ACTIVE . " 
-      AND c.status = " . STATUS_ACTIVE . "
     ORDER BY n.created_at DESC 
     LIMIT 3
 ";
@@ -42,12 +66,11 @@ function getNewsById($id)
         n.created_at,
         n.description,
         n.image,
-        n.body
+        n.body,
+        n.status
     FROM news n
     LEFT JOIN category c ON n.category_id = c.id
-    WHERE n.status = " . STATUS_ACTIVE . " 
-      AND c.status = " . STATUS_ACTIVE . "
-      AND n.id = :id
+    WHERE n.id = :id
 ";
     $stmt = $pdo->prepare($sql);
     $stmt->bindValue(':id', $id, PDO::PARAM_INT);
@@ -70,10 +93,10 @@ function updateCount($id)
 }
 
 function getNewsByCategory($id)
-    {
-        global $pdo;
+{
+    global $pdo;
 
-        $sql = "
+    $sql = "
                 SELECT
                     n.id as news_id,
                     c.name as category_name,
@@ -87,13 +110,64 @@ function getNewsByCategory($id)
                     n.body
                     FROM news n
                     LEFT JOIN category c ON n.category_id = c.id
-                    WHERE n.status = " . STATUS_ACTIVE . " 
-                    AND c.status = " . STATUS_ACTIVE . "
-                    AND c.id = :id
+                    WHERE c.id = :id
 ";
-        $stmt = $pdo->prepare($sql);
-        $stmt->bindValue(':id', $id, PDO::PARAM_INT);
-        $stmt->execute();
+    $stmt = $pdo->prepare($sql);
+    $stmt->bindValue(':id', $id, PDO::PARAM_INT);
+    $stmt->execute();
 
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+
+function newsCreate($title, $description, $category_id, $body, $status)
+{
+    global $pdo;
+    $sql = "INSERT INTO `news`(`title`, `description`, `category_id`, `body`, `status`) 
+    VALUES(:title, :description, :category_id, :body, :status)";
+    $stmt = $pdo->prepare($sql);
+    $stmt->bindParam(":title", $title, PDO::PARAM_STR);
+    $stmt->bindParam(":description", $description, PDO::PARAM_STR);
+    $stmt->bindParam(":category_id", $category_id, PDO::PARAM_INT);
+    $stmt->bindParam(":body", $body, PDO::PARAM_STR);
+    $stmt->bindParam(":status", $status, PDO::PARAM_INT);
+    try {
+        return $stmt->execute();
+    } catch (PDOException $e) {
+        dd($e->getMessage());
     }
+}
+
+function newsUpdate($id, $title, $description, $category_id, $body, $status){
+ global $pdo;
+    $sql = "update `news`
+            SET `title` = :title,
+                `description` = :description,
+                `category_id` = :category_id,
+                `body` = :body,
+                `status` = :status
+            WHERE id = :id";
+    $stmt = $pdo->prepare($sql);
+    $stmt->bindParam(":title", $title, PDO::PARAM_STR);
+    $stmt->bindParam(":description", $description, PDO::PARAM_STR);
+    $stmt->bindParam(":category_id", $category_id, PDO::PARAM_INT);
+    $stmt->bindParam(":body", $body, PDO::PARAM_STR);
+    $stmt->bindParam(":status", $status, PDO::PARAM_INT);
+    $stmt->bindParam(":id", $id, PDO::PARAM_INT);
+    try {
+        return $stmt->execute();
+    } catch (PDOException $e) {
+        dd($e->getMessage());
+    }
+}
+
+function deleteNews($id){
+    global $pdo;
+    $sql = "DELETE FROM `news` WHERE id=:id";
+    $stmt = $pdo->prepare($sql);
+    $stmt->bindParam(":id", $id, PDO::PARAM_INT);
+    try{
+        return $stmt->execute();
+    }catch(PDOException $e){
+        dd($e->getMessage());
+    }
+}

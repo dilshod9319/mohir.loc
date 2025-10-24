@@ -1,39 +1,26 @@
-let deleteMenu = document.querySelectorAll(".delete-menu");
-deleteMenu.forEach(function(btn){
+let deleteBtns = document.querySelectorAll(".delete_btn");
+deleteBtns.forEach(function(btn){
     btn.addEventListener('click', function(e){
         e.preventDefault();
-
         let id = btn.getAttribute("data-id");
+        let actionName = btn.getAttribute("data-action");
         let confirmed = confirm("Rostdan ham o'chirmoqchimisiz?");
-        
         if(confirmed){
-            window.location.href = "?acontroller=menu_delete&id=" + id;
+            window.location.href = "?acontroller="+actionName+"&id=" + id;
         }
     });
 });
 
-let success_alert_menu = document.querySelector(".success-alert-menu");
-    if(success_alert_menu){
+let success_alert = document.querySelector(".success_alert");
+    if(success_alert){
         setTimeout(function(){
-            success_alert_menu.style.display = "none";
+            success_alert.style.display = "none";
         }, 2000);
     }
 
-let deleteCategory = document.querySelectorAll(".delete-category");
-deleteCategory.forEach(function(btn){
-    btn.addEventListener('click', function(e){
-        e.preventDefault();
-        let id = btn.getAttribute("data-id-category");
-        let confirmed = confirm("Rostdan ham o'chirmoqchimisiz?");
-        if(confirmed){
-            window.location.href = "?acontroller=category_delete&id=" + id;
-        }
-    });
-});
-
-let success_alert_category = document.querySelector(".success-alert-category");
-    if(success_alert_category){
+let error_alert = document.querySelector(".error-alert");
+    if(error_alert){
         setTimeout(function(){
-            success_alert_category.style.display = "none";
+            error_alert.style.display = "none";
         }, 2000);
     }
