@@ -4,6 +4,9 @@ require_once __DIR__ .  "/../widgets/header.php";
 <!--begin::Sidebar-->
 <?php
 require_once __DIR__ .  "/../widgets/sidebar.php";
+if(isset($newsItem) && !empty($newsItem['image'])){
+    $image = getImage('news', $newsItem['id'], $newsItem['image']); 
+}
 ?>
 <!--end::Sidebar-->
 
@@ -65,12 +68,19 @@ require_once __DIR__ .  "/../widgets/sidebar.php";
                             </div>
                             <div class="mb-2">
                                 <label for="body" class="form-label">Asosiy matn</label>
-                                <textarea required class="form-control" name="body" id="body" rows="5" cols="30"><?= (isset($newsItem) && !empty($newsItem['body'])) ? $newsItem['body'] : ''?></textarea>
+                                <textarea required class="form-control" name="body" id="body" rows="5" cols="30"><?= (isset($newsItem) && !empty($newsItem['body'])) ? $newsItem['body'] : '' ?></textarea>
                             </div>
 
                             <div class="mb-2">
-                                <label for="image" class="form-label">Rasm</label>
-                                <input type="file" class="form-control" name="image" id="image" accept="image/jpg, image/png">
+                                <div class="row">
+                                    <div class="col-lg-<?=(!empty($newsItem))? 6 : 12 ?>">
+                                        <label for="image" class="form-label">Rasm</label>
+                                        <input type="file" class="form-control" name="image" id="image" accept="image/jpg, image/png, image/jpeg,">
+                                    </div>
+                                    <div class="col-lg-<?=(!empty($newsItem))? 6 : 12 ?>">
+                                        <img style="width: 120px; height: 100px; object-fit:cover" src="<?=$image?>" alt="">
+                                    </div>
+                                </div>
                             </div>
                             <div class="mb-2">
                                 <label for="status" class="form-label">Status</label>
@@ -103,11 +113,11 @@ require_once __DIR__ .  "/../widgets/footer.php";
 ?>
 
 <script>
-    document.getElementById('image').addEventListener('change', function(){
+    document.getElementById('image').addEventListener('change', function() {
         const file = this.files[0];
-        if(file){
+        if (file) {
             const maxSize = 2 * 1024 * 1024; // 2mb
-            if(file.size > maxSize){
+            if (file.size > maxSize) {
                 alert("Fayl hajmi 2MB dan katta bo'lmasligi kerak!");
                 this.value = ""; // faylni tozalash
             }

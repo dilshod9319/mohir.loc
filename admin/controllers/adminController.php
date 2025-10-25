@@ -132,6 +132,8 @@ if (isset($_GET['acontroller']) && !empty($_GET['acontroller'])) {
             break;
         case "news_create":
             $categories = getCategory();
+            $image = getImageName();
+
             if ($_POST) {
                 $title = $_POST['title'];
                 $category_id = $_POST['category_id'];
@@ -139,7 +141,8 @@ if (isset($_GET['acontroller']) && !empty($_GET['acontroller'])) {
                 $body = $_POST['body'];
                 $status = $_POST['status'];
                 if (!empty($title) && !empty($category_id) && !empty($description) && !empty($body)) {
-                    if (newsCreate($title, $description, $category_id, $body, $status)) {
+                    if ($lastId = newsCreate($title, $description, $category_id, $body, $status, $image)) {
+                        saveImage('news', $lastId, $image);
                         $_SESSION['success'] = "Yangilik muvaffaqiyatli yaratildi";
                         header("Location: ?acontroller=news_index");
                         die();
@@ -160,6 +163,11 @@ if (isset($_GET['acontroller']) && !empty($_GET['acontroller'])) {
             if (!$newsItem) {
                 require_once __DIR__ .  "/../views/404.php";
             }
+            $oldImage = getImage('news', $newsItem['id'], $newsItem['image']);
+            $image = getImageName();
+            if (!empty($image) && !empty($oldImage)) {
+                deleteImage('news', $newsItem['id'], $newsItem['image']);
+            }
             if (!empty($_POST)) {
                 $title = $_POST['title'];
                 $category_id = $_POST['category_id'];
@@ -167,7 +175,8 @@ if (isset($_GET['acontroller']) && !empty($_GET['acontroller'])) {
                 $body = $_POST['body'];
                 $status = $_POST['status'];
                 if (!empty($title) && !empty($category_id) && !empty($description) && !empty($body)) {
-                    if (newsUpdate($id, $title, $description, $category_id, $body, $status)) {
+                    if (newsUpdate($id, $title, $description, $category_id, $body, $status, $image)) {
+                        saveImage('news', $newsItem['id'], $image);
                         $_SESSION['success'] = "Yangilik muvaffaqiyatli tahrirlandi";
                         header("Location:?acontroller=news_index");
                         exit();
@@ -182,10 +191,19 @@ if (isset($_GET['acontroller']) && !empty($_GET['acontroller'])) {
         case "news_delete":
             if (isset($_GET['id']) && !empty($_GET['id'])) {
                 $id = $_GET['id'];
-                if (deleteNews($id)) {
-                    $_SESSION['success'] = "Yangilik muvaffaqiyatli o'chirildi";
-                    header("Location:?acontroller=news_index");
-                    exit();
+                $newsItem = getNewsById($id);
+                if (!empty($newsItem)) {
+                    $deleteImage = deleteImage('news', $newsItem['id'], $newsItem['image']);
+                    $deleteFolder = deleteFolder('news', $id);
+                    if (deleteNews($id) && $deleteImage) {
+                        $_SESSION['success'] = "Yangilik muvaffaqiyatli o'chirildi";
+                        header("Location:?acontroller=news_index");
+                        exit();
+                    } else {
+                        $_SESSION['error'] = "Yangilikni o'chirishda xatolik sodir bo'ldi";
+                        header("Location:?acontroller=news_index");
+                        exit();
+                    }
                 }
             }
             break;
