@@ -108,10 +108,12 @@ require_once __DIR__ .  "/../widgets/sidebar.php";
                 <!-- /.card-body -->
                 <div class="card-footer clearfix">
                     <ul class="pagination pagination-sm m-0 float-end">
-                        <?php 
-                        for($i=1; $i <= $pageCount; $i++ ) { 
+                        <?php
+                        $currentPage = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+                        for($i=1; $i <= $pageCount; $i++ ) {
+                            $activeClass = ($currentPage == $i) ? 'active' : '';
                             ?>
-                            <li class="page-item"><a class="page-link" href="?acontroller=news_index&page=<?=$i?>"><?=$i?></a></li>
+                            <li class="page-item <?=$activeClass?>"><a class="page-link" href="?acontroller=news_index&page=<?=$i?>"><?=$i?></a></li>
                         <?php }
                         ?>
                         
