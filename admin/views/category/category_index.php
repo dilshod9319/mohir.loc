@@ -73,8 +73,7 @@ require_once __DIR__ .  "/../widgets/sidebar.php";
                                             <a href="?acontroller=category_update&id=<?= $category['id'] ?>" class="btn btn-primary">
                                                 <i class="fas fa-pencil"></i>
                                             </a>
-                                            <a data-action="category_delete" href="?acontroller=category_delete&id=<?= $category['id'] ?>" class="btn btn-danger delete_btn" data-id
-                                            ="<?= $category['id'] ?>">
+                                            <a data-action="category_delete" href="?acontroller=category_delete&id=<?= $category['id'] ?>" class="btn btn-danger delete_btn" data-id="<?= $category['id'] ?>">
                                                 <i class="fas fa-trash"></i>
                                             </a>
                                         </td>
