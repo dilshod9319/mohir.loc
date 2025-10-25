@@ -86,3 +86,13 @@ function deleteFolder($table_name, $id){
 
     return false;
 }
+
+function getPagination($tableName){
+    global $pdo;
+    $sql = "SELECT * FROM {$tableName}";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute();
+    $rowCount = $stmt->rowCount();
+    $pageCount = ceil($rowCount/LIMIT);
+    return $pageCount;
+}

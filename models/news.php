@@ -1,9 +1,9 @@
 <?php
 
-function getAllNews()
+function getAllNews($page)
 {
     global $pdo;
-
+    $offset = ($page-1)*LIMIT;
     $sql = "
     SELECT
         n.id,
@@ -18,9 +18,12 @@ function getAllNews()
         n.status
     FROM news n
     LEFT JOIN category c ON n.category_id = c.id
-    ORDER BY n.created_at DESC 
+    ORDER BY n.created_at DESC
+    limit :offset, :limit
 ";
     $stmt = $pdo->prepare($sql);
+    $stmt->bindParam(":offset", $offset, PDO::PARAM_INT);
+    $stmt->bindValue(":limit", LIMIT, PDO::PARAM_INT);
     $stmt->execute();
 
     return $stmt->fetchAll(PDO::FETCH_ASSOC);

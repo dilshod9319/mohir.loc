@@ -127,7 +127,12 @@ if (isset($_GET['acontroller']) && !empty($_GET['acontroller'])) {
         // category CRUD end
         // news CRUD start
         case "news_index":
-            $news = getAllNews();
+            $pageCount = getPagination('news');
+            $page = 1;
+            if(!empty($_GET['page'])){
+                $page = $_GET['page'];
+            }
+            $news = getAllNews($page);
             require_once __DIR__ .  "/../views/news/news_index.php";
             break;
         case "news_create":
